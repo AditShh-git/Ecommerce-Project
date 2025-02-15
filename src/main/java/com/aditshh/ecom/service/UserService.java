@@ -24,7 +24,7 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(User.Role.USER);
-        user.setConfirmationCode(generateConfirmationCode());
+//        user.setConfirmationCode(generateConfirmationCode());
         user.setEmailConfirmation(false);
 
         return userRepository.save(user);
@@ -56,11 +56,11 @@ public class UserService {
         }
     }
 
-    private String generateConfirmationCode(){
-        Random random = new Random();
-        int code = 100000 + random.nextInt(900000);
-        return String.valueOf(code);
-    }
+//    private String generateConfirmationCode(){
+//        Random random = new Random();
+//        int code = 100000 + random.nextInt(900000);
+//        return String.valueOf(code);
+//    }
 
     //update
     public User getUserById(Long id) {

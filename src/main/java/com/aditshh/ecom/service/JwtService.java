@@ -1,8 +1,5 @@
 package com.aditshh.ecom.service;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,8 +17,8 @@ public class JwtService {
     private Long expiration;
 
     public String generateToken(UserDetails userDetails){
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+        //        System.out.println("Generated JWT Token: " + token);
+        return createToken(new HashMap<>(), userDetails.getUsername());
     }
     private String createToken(Map<String, Object> claims, String subject){
         return Jwts.builder()
@@ -57,4 +54,3 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 }
-
