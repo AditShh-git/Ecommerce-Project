@@ -1,7 +1,9 @@
 package com.aditshh.ecom.controller;
 
 import com.aditshh.ecom.dto.ChangePasswordRequest;
+import com.aditshh.ecom.dto.EmailConfirmationRequest;
 import com.aditshh.ecom.dto.LoginRequest;
+import com.aditshh.ecom.exception.ResourceNotFoundException;
 import com.aditshh.ecom.model.User;
 import com.aditshh.ecom.service.JwtService;
 import com.aditshh.ecom.service.UserService;
@@ -45,6 +47,19 @@ public class AuthController {
         String email = authentication.getName();
         userService.changePassword(email, request);
         return ResponseEntity.ok().body("Password changed");
+    }
+
+    @PostMapping("/confirm-email")
+    public ResponseEntity<?> confirmEmail(@RequestBody EmailConfirmationRequest request){
+        try{
+            userService.confirmEmail(request.getEmail(), request.getConfirmationCode());
+            return ResponseEntity.ok().body("Email confirmed successfuly");
+        }catch (BadCredentialsException e){
+            return ResponseEntity.badRequest().body("Invalid confirmation code");
+        }
+        catch (ResourceNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
